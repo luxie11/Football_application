@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "League";
+}
+
+@model IEnumerable<FootballApplication.Models.LeagueTeams>
+
+<div class="row content-title">
+    <div class="column-left col-6 center">
+        <h2>
+            @ViewData["League-Title"]
+        </h2>
+    </div>
+    <div class="column-right col-6 center">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 table-information">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="position">P</th>
+                        <th class="team-name">Team</th>
+                        <th class="club-statistics">M</th>
+                        <th class="club-statistics">W</th>
+                        <th class="club-statistics">D</th>
+                        <th class="club-statistics">L</th>
+                        <th class="club-statistics">G+</th>
+                        <th class="club-statistics">G-</th>
+                        <th class="club-statistics">GD</th>
+                        <th class="club-statistics">P</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Select((value, index) => new {value, index }))
+                    {
+                        <tr class="match">
+                            <td class="position">
+                                @(item.index + 1)
+                                @item.value.FkTeam.CrestUrl
+                            </td>
+                            <td class="team-name">
+                                <div class="club-image align-center float-left" style="padding-right:20px;">
+                                    <img src=@item.value.FkTeam.CrestUrl />
+                                </div>
+                                <div class="club-name align-center">
+                                    @item.value.FkTeam.TeamName
+                                </div>
+                            </td>
+                            <td class="club-statistics">
+                                @item.value.MatchesPlayed
+                            </td>
+                            <td class="club-statistics">
+                                @item.value.Wins
+                            </td>
+                            <td class="club-statistics">
+                                @item.value.Draws
+                            </td>
+                            <td class="club-statistics">
+                                @item.value.Loses
+                            </td>
+                            <td class="club-statistics">
+                                @item.value.GoalsScored
+                            </td>
+                            <td class="club-statistics">
+                                @item.value.GoalsConceded
+                            </td>
+                            <td class="club-statistics">
+                                @(item.value.GoalsScored - item.value.GoalsConceded)
+                            </td>
+                            <td class="club-statistics">
+                                @item.value.Points
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

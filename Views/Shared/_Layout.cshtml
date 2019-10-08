@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="~/css/grid.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>@ViewData["Title"] - Football Application</title>
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+</head>
+<body>
+    <div id="wrapper">
+        <header id="header">
+            <div class="column-left">
+                <div class="menu-icon sidebar-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+            </div>
+            <div class="column-right">
+                <div id="settings-button">
+                    <div id="settings" class="menu-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </div>
+                    <div class="dropdown settings-dropdown">
+                        <ul>
+                            <li class="dropdown-item">
+                                <a class="dropdown-link">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main id="main">
+            <div id="sidebar-wrapper" class="shadow-right">
+                <div class="sidebar-header">
+                    <div class="user-image">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <h2>Admin</h2>
+                </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item">
+                        <a class="sidebar-item-link" href="/">Home</a>
+                    </li>
+                    <li class="sidebar-item has-child">
+                        <div class="sidebar-item-link">
+                            <label>Leagues</label>
+                            <i class="fa fa-chevron-down"></i>
+                        </div>
+                        <ul class="child-elements">
+                            <li class="sidebar-dropdown-item">
+                                <a class="sidebar-item-link"
+                                   asp-controller="LeagueTeams"
+                                   asp-route-id="1">
+                                    A lyga
+                                </a>
+                            </li>
+                            <li class="sidebar-dropdown-item">
+                                <a class="sidebar-item-link"
+                                   asp-controller="LeagueTeams"
+                                   asp-route-id="2">
+                                    Seria A
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+    <script src="~/js/index.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

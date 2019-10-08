@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewData["Title"] = "Matches";
+}
+
+@model IEnumerable<FootballApplication.ViewModels.MatchDetails>
+<div class="modal">
+    <div class="modal-box">
+        <span class="close-btn">
+            <i class="fa fa-times"></i>
+        </span>
+        <div class="modal-title">
+            <h2>Add new match</h2>
+        </div>
+        <div class="modal-content">
+            <div class="input-field">
+                <input id="home-team-score" name="home-team-score" type="text" placeholder="Home team score"></input>
+            </div>
+            <div class="input-field">
+                <input id="away-team-score" name="away-team-score" type="text" placeholder="Away team score"></input>
+            </div>
+        </div>
+        <div class="modal-actions text-right">
+            <div class="submit-button">
+                <button class="btn">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row content-title">
+    <div class="column-left col-6 center">
+    </div>
+    <div class="column-right col-6 center">
+        <div class="page-actions">
+            <div class="button-link add-item float-right">
+                <a href="#" class="table-action">
+                    <i class="fa fa-plus"></i>
+                    Add new match
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 table-information">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="table-title" colspan="5">Matches</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr class="match" data-match-id=@item.id>
+                        <td class="game-week">
+                            @item.gameWeek
+                        </td>
+                        <td class="matchtime">
+                            @if ((DateTime.Compare(DateTime.Now, item.matchTime.Value.AddHours(1).AddMinutes(50)) > 0) 
+                                && (item.homeTeamScore != null && item.awayTeamScore != null))
+                            {
+                                <div>
+                                    Full time
+                                </div>
+                            }
+                            else
+                            {
+                                @item.matchTime
+                            }
+                        </td>
+                        <td class="team-name">
+                            <div class="club-image align-center float-right" style="padding-left:20px;">
+                                <img src=@item.homeTeamCrest />
+                            </div>
+                            <div class="club-name align-center justify-right">
+                                @item.homeTeamName
+                            </div>
+                        </td>
+                        <td class="result">
+                            @item.homeTeamScore : @item.awayTeamScore
+                        </td>
+                        <td class="team-name">
+                            <div class="club-image align-center float-left">
+                                <img src=@item.awayTeamCrest />
+                            </div>
+                            <div class="club-name align-center">
+                                @item.awayTeamName
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            Show items
+                            @Model.Count()
+                            of @Model.Count()
+                        </td>
+                        <td colspan="3">
+                            <div class="pagination menu">
+                                <a class="icon item">
+                                    <i class="fa fa-chevron-left"></i>
+                                </a>
+                                <a class="active item">
+                                    1
+                                </a>
+                                <a class="item">
+                                    2
+                                </a>
+                                <a class="icon item">
+                                    <i class="fa fa-chevron-right"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

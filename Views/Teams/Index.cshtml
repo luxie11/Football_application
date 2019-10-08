@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@model FootballApplication.ViewModels.TeamDetails
+
+<div class="row">
+    <div class="col-8 table-information">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Nat.</th>
+                        <th>Player</th>
+                        <th>Position</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @foreach(var item in Model.Players)
+                  {
+                        <tr>
+                            <td>
+                                @item.KitNumber
+                            </td>
+                            <td>
+                                @item.FirstName @item.LastName
+                            </td>
+                            <td>
+                                @item.Nationality
+                            </td>
+                            <td>
+                                @item.Position
+                            </td>
+                        </tr>
+                  }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
