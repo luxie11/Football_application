@@ -12,7 +12,7 @@ namespace FootballApplication.Models
         public int? KitNumber { get; set; }
         public string Nationality { get; set; }
         public int FkPlayerTeam { get; set; }
-
         public virtual Team FkPlayerTeamNavigation { get; set; }
     }
+
 }

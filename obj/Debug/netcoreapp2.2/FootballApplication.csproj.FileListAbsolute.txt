@@ -26,5 +26,5 @@ D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballAppl
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Matches\Index.cshtml.g.cs
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\bin\Debug\netcoreapp2.2\libman.json
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\LeagueTeams\Index.cshtml.g.cs
-D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\FootballApplication.csprojAssemblyReference.cache
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Teams\Index.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\FootballApplication.csprojAssemblyReference.cache

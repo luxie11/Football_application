@@ -60,7 +60,8 @@ html {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-right: 0px;
-    margin-left: 0px
+    margin-left: 0px;
+    margin-bottom:20px !important;
 }
 
 .no-gutters {

@@ -28,8 +28,10 @@ namespace FootballApplication.Controllers
             ViewData["League-Title"] = leagueName;
             var leagueTeams = (from leagueTable in _context.LeagueTeams
                                join team in _context.Team on leagueTable.FkTeamId equals team.IdTeam
-                               select new LeagueTableDetails {
+                               select new LeagueTableDetails
+                               {
                                    leagueID = leagueTable.FkLeaguesId,
+                                   teamID = team.IdTeam,
                                    teamCrest = team.CrestUrl,
                                    teamName = team.TeamName,
                                    matchesPlayed = leagueTable.MatchesPlayed,
@@ -38,9 +40,8 @@ namespace FootballApplication.Controllers
                                    loses = leagueTable.Loses,
                                    goalsScored = leagueTable.GoalsScored,
                                    goalsConceded = leagueTable.GoalsConceded,
-                                   goalsDifference = leagueTable.GoalsScored - leagueTable.GoalsConceded,
+                                   goalsDifference = (leagueTable.GoalsScored - leagueTable.GoalsConceded),
                                    points = leagueTable.Points
-
                                })
                                .Where(el => el.leagueID == id)
                                .OrderByDescending(el => el.points)

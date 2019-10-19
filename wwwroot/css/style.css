@@ -47,6 +47,19 @@ li {
     list-style-type: none;
 }
 
+select {
+    margin: 0;
+    width: 100%;
+    outline: 0;
+    text-align: left;
+    line-height: 1.21428571em;
+    padding: .67857143em 1em;
+    background: #fff;
+    border: 1px solid rgba(34,36,38,.15);
+    color: rgba(0,0,0,.87);
+    border-radius: .28571429rem;
+}
+
 #wrapper {
     height: 100%;
     position: relative;
@@ -154,17 +167,17 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
 }
 
-    .menu-icon:hover i {
-        transition: .5s;
-        background: rgba(255, 255, 255, 0.2);
-        padding: 10px;
-        border-radius: 100%;
-    }
+.menu-icon:hover i {
+    transition: .5s;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 100%;
+}
 
-    .menu-icon > i {
-        color: white;
-        font-size: 25px;
-    }
+.menu-icon > i {
+    color: white;
+    font-size: 25px;
+}
 
 /* Main CSS */
 main {
@@ -308,6 +321,7 @@ table {
     border-radius: 10px;
     overflow: hidden;
     width: 100%;
+    margin-bottom:30px;
 }
 
 td {
@@ -322,12 +336,12 @@ tr {
     background-color: var(--table-row);
 }
 
-tbody > tr.match:hover {
+tbody > tr.match:hover, tbody > tr.league-team:hover {
     cursor: pointer;
     background-color: #f0f0f0;
 }
 
-tbody > tr.match:hover > td {
+tbody > tr.match:hover > td, tbody > tr.league-team:hover > td {
     border-color: #f0f0f0;
 }
 
@@ -384,8 +398,9 @@ tbody > tr.match:hover > td {
 }
 
 .table-title {
-    font-size: 25px;
     padding-left: 30px;
+    text-align: left !important;
+    font-size: 18px;
 }
 
 th {
@@ -426,6 +441,35 @@ th {
     padding-right:20px;
 }
 
+.fixture-team{
+    width:32.5%;
+}
+
+.fixture-result{
+    width:10%;
+}
+
+.fixture-state{
+    width:15%;
+}
+
+.state {
+    color: white;
+    border-radius: 10px;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.next-match-date{
+    width:35%;
+}
+.next-match-team{
+    width:30%;
+}
+
 /* Pagination */
 .menu {
     margin: 1rem 0;
@@ -442,10 +486,11 @@ th {
     vertical-align: middle;
 }
 
-    .pagination.menu .item {
-        min-width: 3em;
-        text-align: center;
-    }
+.pagination.menu .item {
+    min-width: 3em;
+    text-align: center;
+    text-decoration:none;
+}
 
 .menu .item {
     position: relative;
@@ -455,6 +500,7 @@ th {
     user-select: none;
     color: rgba(0,0,0,.75);
     border: 1px solid #f0f0f0;
+    text-decoration: none;
 }
 
 .menu .item {
@@ -469,9 +515,9 @@ th {
     cursor: pointer;
 }
 
-    .pagination .item:hover {
-        background-color: #f0f0f0;
-    }
+.pagination .item:hover {
+    background-color: #f0f0f0;
+}
 
 /* Button animation */
 .menu-icon:focus:before {
@@ -524,12 +570,12 @@ th {
     font-size: 20px;
 }
 
-    .close-btn:hover,
-    .close-btn:focus {
-        color: var(--primary-color);
-        text-decoration: none;
-        cursor: pointer;
-    }
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .modal-title {
     border-bottom: 1px solid rgba(34,36,38,.15);
@@ -679,4 +725,161 @@ input {
     .active-header {
         width: 70% !important;
     }
+}
+
+.round {
+    width: 150px;
+    height: 150px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    border: 2px solid var(--primary-color)
+}
+
+.club-logo > img {
+    height: 100px;
+}
+
+.club-logo {
+    float: left;
+}
+
+.club-details {
+    float: left;
+    margin-left: 10px;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
+.club-div {
+    height: 150px;
+}
+
+.club-title {
+    display: block;
+}
+
+.club-country {
+    display: block;
+}
+
+.club-page{
+    margin-bottom:30px !important;
+}
+
+.club-country > img {
+    width: 40px;
+    height: 25px;
+}
+
+.club-information {
+    display: inline-block;
+    position: relative;
+    margin-right: 50px;
+    margin-bottom: 20px;
+}
+
+.information-box {
+    min-width: 250px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    font-size: 18px;
+    color: rgba(0, 0, 0, .75);
+}
+
+.information-title {
+    font-size: 17px;
+    color: #000000;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 1531px) {
+    .club-information {
+        display: inline-block;
+        position: relative;
+        margin-right: 30px;
+        margin-bottom: 20px;
+        margin-left: 30px;
+    }
+}
+
+@media only screen and (max-width:1000px) {
+    .club-page {
+        display: block !important;
+    }
+
+    .club-page > div {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .club-page > div:nth-child(1) > div {
+        margin: 0 auto;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .club-title {
+        width: 200px;
+    }
+
+    .club-country {
+        margin-top: 10px;
+    }
+
+    .club-information {
+        margin: 0px;
+    }
+
+    .round {
+        float: none;
+    }
+
+    .club-details {
+        width: 200px;
+    }
+
+    .club-div {
+        height: auto;
+    }
+
+    .col-4, .col-8 {
+        -ms-flex: 100% !important;
+        flex: 100% !important;
+        max-width: 100% !important;
+        padding: 0px !important;
+    }
+}
+
+.go-back-btn {
+    border-radius: 5px;
+    height: 40px;
+    border: none;
+    font-size: 16px;
+    color: #56d224;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.go-back-btn:hover {
+    color: #3C9319;
+    transition: .4s;
+    text-decoration: none;
 }

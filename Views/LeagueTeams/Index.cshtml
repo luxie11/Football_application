@@ -3,15 +3,18 @@
     ViewData["Title"] = "League";
 }
 
-@model IEnumerable<FootballApplication.Models.LeagueTeams>
-
+@model IEnumerable<FootballApplication.ViewModels.LeagueTableDetails>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 <div class="row content-title">
     <div class="column-left col-6 center">
         <h2>
             @ViewData["League-Title"]
+
         </h2>
-    </div>
-    <div class="column-right col-6 center">
+        <h2>
+            @HttpContextAccessor.HttpContext.Session.GetString("Testavimas")
+        </h2>
     </div>
 </div>
 <div class="row">
@@ -33,44 +36,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Select((value, index) => new {value, index }))
+                    @foreach (var item in Model.Select((value, index) => new { value, index }))
                     {
-                        <tr class="match">
+                        <tr class="league-team" data-team-id=@item.value.teamID>
                             <td class="position">
                                 @(item.index + 1)
-                                @item.value.FkTeam.CrestUrl
                             </td>
                             <td class="team-name">
                                 <div class="club-image align-center float-left" style="padding-right:20px;">
-                                    <img src=@item.value.FkTeam.CrestUrl />
+                                    <img src=@item.value.teamCrest />
                                 </div>
                                 <div class="club-name align-center">
-                                    @item.value.FkTeam.TeamName
+                                    @item.value.teamName.Trim()
                                 </div>
                             </td>
                             <td class="club-statistics">
-                                @item.value.MatchesPlayed
+                                @item.value.matchesPlayed
                             </td>
                             <td class="club-statistics">
-                                @item.value.Wins
+                                @item.value.wins
                             </td>
                             <td class="club-statistics">
-                                @item.value.Draws
+                                @item.value.draws
                             </td>
                             <td class="club-statistics">
-                                @item.value.Loses
+                                @item.value.loses
                             </td>
                             <td class="club-statistics">
-                                @item.value.GoalsScored
+                                @item.value.goalsScored
                             </td>
                             <td class="club-statistics">
-                                @item.value.GoalsConceded
+                                @item.value.goalsConceded
                             </td>
                             <td class="club-statistics">
-                                @(item.value.GoalsScored - item.value.GoalsConceded)
+                                @(item.value.goalsDifference)
                             </td>
                             <td class="club-statistics">
-                                @item.value.Points
+                                @item.value.points
                             </td>
                         </tr>
                     }

@@ -9,6 +9,21 @@ namespace FootballApplication.ViewModels
     public class TeamDetails
     {
         public List<Players> Players { get; set; }
-        public List<Team> Team { get; set; }
+        public List<Tuple<string, int?, int, string, int?, int, DateTime?>> finishedMatches { get; set; }
+        public List<Tuple<string, int?, int, string, int?, int, DateTime?>> nextMatches { get; set; }
+        public int leagueID { get;set; }
+        public string stadiumName { get; set; }
+        public string teamName { get; set; }
+        public string clubColors { get; set; }
+        public string crestUrl { get; set; }
+        public string founded { get; set; }
+    }
+
+    public enum PlayerPosition
+    {
+        Goalkeeper,
+        Defender,
+        Midfielder,
+        Attacker
     }
 }

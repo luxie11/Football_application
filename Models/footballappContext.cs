@@ -331,6 +331,28 @@ namespace FootballApplication.Models
                     .HasMaxLength(80)
                     .IsUnicode(false);
             });
+
+            modelBuilder.Entity<Users>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.ToTable("users", "footballapp");
+
+                entity.Property(e => e.Username)
+                    .HasColumnName("username")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Role)
+                    .HasColumnName("role")
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
+            });
         }
     }
 }

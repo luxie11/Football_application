@@ -8,6 +8,7 @@ namespace FootballApplication.ViewModels
     public class LeagueTableDetails
     {
         public int leagueID { get; set; }
+        public int teamID { get; set; }
         public string teamCrest { get; set; }
         public string teamName { get; set; }
         public int? matchesPlayed { get; set; }
@@ -16,11 +17,7 @@ namespace FootballApplication.ViewModels
         public int? loses { get; set; }
         public int? goalsScored { get; set; }
         public int? goalsConceded { get; set; }
-        public int? goalsDifference { 
-            get { return this.goalsDifference; } 
-            set { goalsDifference = goalsScored - goalsDifference; } 
-        }
-
+        public int? goalsDifference { get; set; }
         public int? points { get; set; }
 
     }

@@ -26,14 +26,14 @@ if (addItemButton) {
     addItemButton.addEventListener('click', function () {
         modalElement.style.display = "block";
     });
-}
+};
 
 var closeButton = document.querySelector('.close-btn');
 if (closeButton) {
     closeButton.addEventListener('click', function () {
         modalElement.style.display = "none";
     });
-}
+};
 
 
 var settingsButton = document.getElementById('settings');
@@ -42,7 +42,7 @@ if (settingsButton) {
     settingsButton.addEventListener('click', function () {
         settingsDropdown.classList.toggle('dropdown-active');
     })
-}
+};
 
 
 window.onclick = function (e) {
@@ -55,7 +55,7 @@ window.onclick = function (e) {
         !e.target.classList.contains('dropdown-link') && e.target != settingsButton && e.target != settingsIcon) {
         settingsDropdown.classList.remove('dropdown-active');
     }
-}
+};
 
 var sidebarDropdownArray = document.querySelectorAll('.sidebar-item.has-child');
 sidebarDropdownArray.forEach(el => {
@@ -65,11 +65,20 @@ sidebarDropdownArray.forEach(el => {
         el.children[1].classList.toggle('active-child-elements');
         if (el.classList.contains('active-dropdown')) {
             el.children[0].children[1].classList.remove("fa-chevron-down");
-            el.children[0].children[1].classList.add("fa-chevron-up");
+            el.children[0].children[1].classList.add('fa-chevron-up');
         } else {
-            el.children[0].children[1].classList.remove("fa-chevron-up");
-            el.children[0].children[1].classList.add("fa-chevron-down");
+            el.children[0].children[1].classList.remove('fa-chevron-up');
+            el.children[0].children[1].classList.add('fa-chevron-down');
         }
     })
-})
+});
 
+
+var leagueTeams = document.querySelectorAll('.league-team');
+leagueTeams.forEach(el => {
+    el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var teamID = e.target.closest('.league-team').getAttribute('data-team-id');
+        window.location.href = `/Teams/${teamID}`;
+    });
+})

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using FootballApplication.Models;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace FootballApplication
 {
@@ -16,10 +17,13 @@ namespace FootballApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
-        {
+        { 
+            services.AddSession();
+
             services.AddMvc();
 
             services.AddDbContext<footballappContext>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,6 +34,7 @@ namespace FootballApplication
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -38,6 +43,12 @@ namespace FootballApplication
                     "LeagueTeams",
                     "LeagueTeams/{id?}",
                     defaults: new { controller = "LeagueTeams", action = "Index" }
+                );
+
+                routes.MapRoute(
+                    "Teams",
+                    "Teams/{id}",
+                    defaults: new { controller = "Teams", action = "Index" }
                 );
 
                 routes.MapRoute(

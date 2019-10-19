@@ -2,8 +2,10 @@
 @{
     ViewData["Title"] = "Matches";
 }
-
-@model IEnumerable<FootballApplication.ViewModels.MatchDetails>
+@model FootballApplication.ViewModels.MatchDetails
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 <div class="modal">
     <div class="modal-box">
         <span class="close-btn">
@@ -14,10 +16,28 @@
         </div>
         <div class="modal-content">
             <div class="input-field">
-                <input id="home-team-score" name="home-team-score" type="text" placeholder="Home team score"></input>
+                @Html.DropDownList("stadium", new SelectList(Model.LeaguesList.Select(el => new { Value = el.IdLeagues, Key = el.Name }), "Value", "Key"), "Select league")
             </div>
             <div class="input-field">
-                <input id="away-team-score" name="away-team-score" type="text" placeholder="Away team score"></input>
+                @Html.DropDownList("homeTeam", new SelectList(Model.TeamList.Select(el => new { Value = el.IdTeam, Key = el.TeamName }), "Value", "Key"), "Select home team")
+            </div>
+            <div class="input-field">
+                @Html.TextBox("home-team-score", null, new { @placeholder = "Home team score" })
+            </div>
+            <div class="input-field">
+                @Html.DropDownList("awayTeam", new SelectList(Model.TeamList.Select(el => new { Value = el.IdTeam, Key = el.TeamName }), "Value", "Key"), "Select away team")
+            </div>
+            <div class="input-field">
+                @Html.TextBox("away-team-score", null, new { @placeholder = "Away team score" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("gameweek", null, new { @placeholder = "Gameweek" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("gameTime", null, new { @placeholder = "Match time"})
+            </div>
+            <div class="input-field">
+                @Html.DropDownList("stadium", new SelectList(Model.StadiumsList.Select(el => new { Value = el.IdStadiums, Key = el.Name }), "Value", "Key"), "Select stadium")
             </div>
         </div>
         <div class="modal-actions text-right">
@@ -29,6 +49,7 @@
 </div>
 <div class="row content-title">
     <div class="column-left col-6 center">
+        @HttpContextAccessor.HttpContext.Session.GetString("Testavimas")
     </div>
     <div class="column-right col-6 center">
         <div class="page-actions">
@@ -51,68 +72,85 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.HeadToHeadMatches)
                     {
-                    <tr class="match" data-match-id=@item.id>
-                        <td class="game-week">
-                            @item.gameWeek
-                        </td>
-                        <td class="matchtime">
-                            @if ((DateTime.Compare(DateTime.Now, item.matchTime.Value.AddHours(1).AddMinutes(50)) > 0) 
-                                && (item.homeTeamScore != null && item.awayTeamScore != null))
-                            {
-                                <div>
-                                    Full time
+                        <tr class="match" data-match-id=@item.id>
+                            <td class="game-week">
+                                @item.gameWeek
+                            </td>
+                            <td class="matchtime">
+                                @if ((DateTime.Compare(DateTime.Now, item.matchTime.Value.AddHours(1).AddMinutes(50)) > 0)
+                              && (item.homeTeamScore != null && item.awayTeamScore != null))
+                                {
+                                    <div>
+                                        Full time
+                                    </div>
+                                }
+                                else
+                                {
+                                    @item.matchTime
+                                }
+                            </td>
+                            <td class="team-name">
+                                <div class="club-image align-center float-right" style="padding-left:20px;">
+                                    <img src=@item.homeTeamCrest />
                                 </div>
-                            }
-                            else
-                            {
-                                @item.matchTime
-                            }
-                        </td>
-                        <td class="team-name">
-                            <div class="club-image align-center float-right" style="padding-left:20px;">
-                                <img src=@item.homeTeamCrest />
-                            </div>
-                            <div class="club-name align-center justify-right">
-                                @item.homeTeamName
-                            </div>
-                        </td>
-                        <td class="result">
-                            @item.homeTeamScore : @item.awayTeamScore
-                        </td>
-                        <td class="team-name">
-                            <div class="club-image align-center float-left">
-                                <img src=@item.awayTeamCrest />
-                            </div>
-                            <div class="club-name align-center">
-                                @item.awayTeamName
-                            </div>
-                        </td>
-                    </tr>
+                                <div class="club-name align-center justify-right">
+                                    @item.homeTeamName
+                                </div>
+                            </td>
+                            <td class="result">
+                                @item.homeTeamScore : @item.awayTeamScore
+                            </td>
+                            <td class="team-name">
+                                <div class="club-image align-center float-left">
+                                    <img src=@item.awayTeamCrest />
+                                </div>
+                                <div class="club-name align-center">
+                                    @item.awayTeamName
+                                </div>
+                            </td>
+                        </tr>
                     }
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="2">
                             Show items
-                            @Model.Count()
-                            of @Model.Count()
+                            @(Model.HeadToHeadMatches.PageNumber * Model.HeadToHeadMatches.PageSize)
+                            of @Model.HeadToHeadMatches.TotalItemCount
                         </td>
                         <td colspan="3">
                             <div class="pagination menu">
-                                <a class="icon item">
-                                    <i class="fa fa-chevron-left"></i>
-                                </a>
-                                <a class="active item">
-                                    1
-                                </a>
-                                <a class="item">
-                                    2
-                                </a>
-                                <a class="icon item">
-                                    <i class="fa fa-chevron-right"></i>
-                                </a>
+                                @if (Model.HeadToHeadMatches.HasPreviousPage)
+                                {
+                                    <a asp-route-page=@(Model.HeadToHeadMatches.PageNumber - 1) class="icon item">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </a>
+                                }
+                                @for (int i = 0; i < Model.HeadToHeadMatches.PageCount; i++)
+                                {
+                                    if ((i + 1) == Model.HeadToHeadMatches.PageNumber)
+                                    {
+                                        <a asp-route-page=@(i+1) class="item active-link">
+                                            @(i + 1)
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-route-page=@(i+1) class="item">
+                                            @(i + 1)
+                                        </a>
+                                    }
+
+                                }
+                                @if (Model.HeadToHeadMatches.HasNextPage)
+                                {
+                                    <a asp-route-page=@(Model.HeadToHeadMatches.PageNumber + 1) class="icon item">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                }
+
                             </div>
                         </td>
                     </tr>
