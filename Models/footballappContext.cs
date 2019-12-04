@@ -21,6 +21,7 @@ namespace FootballApplication.Models
         public virtual DbSet<Players> Players { get; set; }
         public virtual DbSet<Stadiums> Stadiums { get; set; }
         public virtual DbSet<Team> Team { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -345,7 +346,7 @@ namespace FootballApplication.Models
 
                 entity.Property(e => e.Password)
                     .HasColumnName("password")
-                    .HasMaxLength(255)
+                    .HasMaxLength(40)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Role)

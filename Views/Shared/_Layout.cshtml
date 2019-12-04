@@ -11,6 +11,8 @@
     <title>@ViewData["Title"] - Football Application</title>
     @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
     @addTagHelper *, FootballApplication
+    @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor HttpContextAccessor
 </head>
 <body>
     <div id="wrapper">
@@ -27,9 +29,26 @@
                     </div>
                     <div class="dropdown settings-dropdown">
                         <ul>
+                            @if (HttpContextAccessor.HttpContext.Session.Get("IsUserConnected") == null)
+                            {
                             <li class="dropdown-item">
-                                <a class="dropdown-link">Logout</a>
+                                <a asp-controller="Account"
+                                   class="dropdown-link">
+                                    Login
+                                </a>
                             </li>
+                            }
+                            else
+                            {
+                            <li class="dropdown-item">
+                                <a asp-controller="Account"
+                                   asp-action="Logout"
+                                   class="dropdown-link">
+                                    Log out
+                                </a>
+                            </li>
+                            }
+
                         </ul>
                     </div>
                 </div>
@@ -38,10 +57,17 @@
         <main id="main">
             <div id="sidebar-wrapper" class="shadow-right">
                 <div class="sidebar-header">
-                    <div class="user-image">
-                        <i class="fa fa-user"></i>
-                    </div>
-                    <h2>Admin</h2>
+                    @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+                     && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1
+                     && HttpContextAccessor.HttpContext.Session.GetString("Username") != null)
+                    {
+                        <div class="user-image">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <h2>
+                            @HttpContextAccessor.HttpContext.Session.GetString("Username")
+                        </h2>
+                    }
                 </div>
                 <ul class="sidebar-nav">
                     <li class="sidebar-item">
@@ -70,6 +96,24 @@
                         </ul>
                     </li>
                 </ul>
+                @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+                  && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+                {
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-item">
+                            <a class="sidebar-item-link" href="/">Add League</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-item-link" href="/">Add Stadium</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-item-link" href="/">Add Team</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-item-link" href="/">Users</a>
+                        </li>
+                    </ul>
+                }
             </div>
             <div class="content-wrapper">
                 @RenderBody()

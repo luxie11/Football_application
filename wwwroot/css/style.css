@@ -226,6 +226,7 @@ main {
 
 .sidebar-nav {
     padding: 10px 0px;
+    border-top: 2px solid rgba(179, 179, 179,0.2);
 }
 
 .sidebar-item {
@@ -277,6 +278,10 @@ main {
     margin-bottom: 20px;
     text-align: center;
     color: white;
+}
+
+.sidebar-header > h2{
+    text-transform:capitalize;
 }
 
 .user-image > i {
@@ -883,3 +888,4 @@ input {
     transition: .4s;
     text-decoration: none;
 }
+

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="~/css/login.css" />
+    <title>@ViewData["Title"] - Football Application</title>
+</head>
+<body>
+    <div class="login-page">
+        @if (TempData["UsernameError"] != null)
+        {
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                @TempData["UsernameError"]
+            </div>
+        }
+
+        @if (TempData["PasswordError"] != null)
+        {
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                @TempData["PasswordError"]
+            </div>
+        }
+
+        @if (TempData["UserError"] != null)
+        {
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                @TempData["UserError"]
+            </div>
+        }
+
+        <div class="form">
+            <form class="login-form" method="post" asp-controller="Account" asp-action="Login">
+                @Html.TextBox("username", null, new { @placeholder = "Username", @type = "text" })
+                @Html.TextBox("password", null, new { @placeholder = "Password", @type = "password" })
+                <button type="submit">login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

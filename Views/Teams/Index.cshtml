@@ -3,220 +3,231 @@
 }
 
 @model FootballApplication.ViewModels.TeamDetails
-<div class="modal">
-    <div class="modal-box">
-        <span class="close-btn">
-            <i class="fa fa-times"></i>
-        </span>
-        <div class="modal-title">
-            <h2>Add new match</h2>
-        </div>
-        <div class="modal-content">
-            <div class="input-field">
-                @Html.TextBox("firstname", null, new { @placeholder = "Firstname" })
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+{
+    <div class="modal">
+        <div class="modal-box">
+            <span class="close-btn">
+                <i class="fa fa-times"></i>
+            </span>
+            <div class="modal-title">
+                <h2>Add new player</h2>
             </div>
-            <div class="input-field">
-                @Html.TextBox("lastname", null, new { @placeholder = "Lastname" })
-            </div>
-            <div class="input-field">
-                @Html.DropDownList("position", new SelectList(Enum.GetValues(typeof(FootballApplication.ViewModels.PlayerPosition))), "Select player position")
-            </div>
-            <div class="input-field">
-                @Html.TextBox("kitnumber", null, new { @placeholder = "Kit number" })
-            </div>
-            <div class="input-field">
-                @Html.TextBox("nationality", null, new { @placeholder = "Nationality" })
-            </div>
-        </div>
-        <div class="modal-actions text-right">
-            <div class="submit-button">
-                <button class="btn">Post</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <a class="go-back-btn" href="javascript:history.go(-1)">
-            <i class="fa fa-arrow-left"></i>
-            Go back
-        </a>
-    </div>
-    <div class="column-right col-6 center">
-        <div class="page-actions">
-            <div class="button-link add-item float-right">
-                <a href="#" class="table-action">
-                    <i class="fa fa-plus"></i>
-                    Add new player
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row club-page align-center">
-    <div class="col-4">
-        <div class="round club-logo">
-            <img src=@Model.crestUrl />
-        </div>
-        <div class="col-6 align-center club-div">
-            <div class="club-details">
-                <div class="club-title">
-                    <h3>
-                        @Model.teamName
-                    </h3>
+            <div class="modal-content">
+                <div class="input-field">
+                    @Html.TextBox("firstname", null, new { @placeholder = "Firstname" })
                 </div>
-                <div class="club-country">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Flag_of_Lithuania.png" />
+                <div class="input-field">
+                    @Html.TextBox("lastname", null, new { @placeholder = "Lastname" })
+                </div>
+                <div class="input-field">
+                    @Html.DropDownList("position", new SelectList(Enum.GetValues(typeof(FootballApplication.ViewModels.PlayerPosition))), "Select player position")
+                </div>
+                <div class="input-field">
+                    @Html.TextBox("kitnumber", null, new { @placeholder = "Kit number" })
+                </div>
+                <div class="input-field">
+                    @Html.TextBox("nationality", null, new { @placeholder = "Nationality" })
+                </div>
+            </div>
+            <div class="modal-actions text-right">
+                <div class="submit-button">
+                    <button class="btn">Post</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-8">
-        <div class="club-information">
-            <div class="information-title">
-                <label>Founded</label>
+}
+    <div class="row">
+        <div class="col-6">
+            <a class="go-back-btn" href="javascript:history.go(-1)">
+                <i class="fa fa-arrow-left"></i>
+                Go back
+            </a>
+        </div>
+        <div class="column-right col-6 center">
+            @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+               && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+            {
+                <div class="page-actions">
+                    <div class="button-link add-item float-right">
+                        <a href="#" class="table-action">
+                            <i class="fa fa-plus"></i>
+                            Add new player
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row club-page align-center">
+        <div class="col-4">
+            <div class="round club-logo">
+                <img src=@Model.crestUrl />
             </div>
-            <div class="information-box">
-                @Model.founded
+            <div class="col-6 align-center club-div">
+                <div class="club-details">
+                    <div class="club-title">
+                        <h3>
+                            @Model.teamName
+                        </h3>
+                    </div>
+                    <div class="club-country">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Flag_of_Lithuania.png" />
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="club-information">
-            <div class="information-title">
-                <label>Club colors</label>
+        <div class="col-8">
+            <div class="club-information">
+                <div class="information-title">
+                    <label>Founded</label>
+                </div>
+                <div class="information-box">
+                    @Model.founded
+                </div>
             </div>
-            <div class="information-box">
-                @Model.clubColors
+            <div class="club-information">
+                <div class="information-title">
+                    <label>Club colors</label>
+                </div>
+                <div class="information-box">
+                    @Model.clubColors
+                </div>
             </div>
-        </div>
-        <div class="club-information">
-            <div class="information-title">
-                <label>Stadium</label>
-            </div>
-            <div class="information-box">
-                @Model.stadiumName
+            <div class="club-information">
+                <div class="information-title">
+                    <label>Stadium</label>
+                </div>
+                <div class="information-box">
+                    @Model.stadiumName
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-8 table-information">
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Nat.</th>
-                        <th>Player</th>
-                        <th>Position</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Players)
-                    {
-                        <tr>
-                            <td>
-                                @item.KitNumber
-                            </td>
-                            <td>
-                                @item.FirstName @item.LastName
-                            </td>
-                            <td>
-                                @item.Nationality
-                            </td>
-                            <td>
-                                @item.Position
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="col-4">
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="table-title" colspan="5">Fixtures</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.finishedMatches)
-                    {
-                        <tr>
-                            <td class="fixture-team">
-                                @item.Item1
-                            </td>
-                            <td class="fixture-result">
-                                @item.Item2
-                            </td>
-                            <td class="fixture-state">
-                                @if ((item.Item1.Equals(Model.teamName) && item.Item2 > item.Item5) || (item.Item4.Equals(Model.teamName) && item.Item2 < item.Item5))
-                                {
-                                    <div class="state" style="background-color:#3a927f;">
-                                        WON
-                                    </div>
-                                }
-                                else if (item.Item2 == item.Item5)
-                                {
-                                    <div class="state" style="background-color:#ff7b28;">
-                                        DRAW
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="state" style="background-color:#a73c3c;">
-                                        LOSE
-                                    </div>
-                                }
-                            </td>
-                            <td class="fixture-result">
-                                @item.Item5
-                            </td>
-                            <td class="fixture-team">
-                                @item.Item4
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-8 table-information">
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-title" colspan="5">Next matches</th>
+                            <th>Number</th>
+                            <th>Nat.</th>
+                            <th>Player</th>
+                            <th>Position</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.nextMatches.Count != 0)
+                        @foreach (var item in Model.Players)
                         {
-                            @foreach (var item in Model.nextMatches)
-                            {
-                                <tr>
-                                    <td class="next-match-date">
-                                        @item.Item7
-                                    </td>
-                                    <td class="next-match-team">
-                                        @item.Item1
-                                    </td>
-                                    <td>
-                                        -
-                                    </td>
-                                    <td class="next-match-team">
-                                        @item.Item4
-                                    </td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <td colspan="5">
-                                No matches
-                            </td>
+                            <tr>
+                                <td>
+                                    @item.KitNumber
+                                </td>
+                                <td>
+                                    @item.FirstName @item.LastName
+                                </td>
+                                <td>
+                                    @item.Nationality
+                                </td>
+                                <td>
+                                    @item.Position
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
-</div>
+        <div class="col-4">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="table-title" colspan="5">Fixtures</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.finishedMatches)
+                        {
+                            <tr>
+                                <td class="fixture-team">
+                                    @item.Item1
+                                </td>
+                                <td class="fixture-result">
+                                    @item.Item2
+                                </td>
+                                <td class="fixture-state">
+                                    @if ((item.Item1.Equals(Model.teamName) && item.Item2 > item.Item5) || (item.Item4.Equals(Model.teamName) && item.Item2 < item.Item5))
+                                    {
+                                        <div class="state" style="background-color:#3a927f;">
+                                            WON
+                                        </div>
+                                    }
+                                    else if (item.Item2 == item.Item5)
+                                    {
+                                        <div class="state" style="background-color:#ff7b28;">
+                                            DRAW
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="state" style="background-color:#a73c3c;">
+                                            LOSE
+                                        </div>
+                                    }
+                                </td>
+                                <td class="fixture-result">
+                                    @item.Item5
+                                </td>
+                                <td class="fixture-team">
+                                    @item.Item4
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="table-title" colspan="5">Next matches</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.nextMatches.Count != 0)
+                            {
+                                @foreach (var item in Model.nextMatches)
+                                {
+                                    <tr>
+                                        <td class="next-match-date">
+                                            @item.Item7
+                                        </td>
+                                        <td class="next-match-team">
+                                            @item.Item1
+                                        </td>
+                                        <td>
+                                            -
+                                        </td>
+                                        <td class="next-match-team">
+                                            @item.Item4
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                            <td colspan="5">
+                                No matches
+                            </td>
+                        }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
