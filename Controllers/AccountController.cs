@@ -40,11 +40,11 @@ namespace FootballApplication.Controllers
                 return Redirect("/");
             }
             if (username.Length == 0)
-                TempData["UsernameError"] = "Please enter username";
+                ViewData["UsernameError"] = "Please enter username";
             if (password.Length == 0)
-                TempData["PasswordError"] = "Please enter password";
+                ViewData["PasswordError"] = "Please enter password";
             if (userDetails == null && password.Length != 0 && username.Length != 0)
-                TempData["UserError"] = "Please enter correct details";
+                ViewData["UserError"] = "Please enter correct details";
             return View("Index");
         }
 

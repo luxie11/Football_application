@@ -39,7 +39,7 @@ namespace FootballApplication.Controllers
                                 gameWeek = matches.GameWeek
                             }).OrderBy(model => model.matchTime)
                             .ToListAsync();
-          
+
             MatchDetails matchDetails = new MatchDetails();
 
             int pageSize = 10;
@@ -59,9 +59,11 @@ namespace FootballApplication.Controllers
             return View(matchDetails);
         }
 
-        public async Task<IActionResult> Insert(object sender, EventArgs e)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Insert()
         {
-            string leagueId = Request.Form["stadium"];
+            string leagueId = Request.Form["league"];
             string homeTeamId = Request.Form["homeTeam"];
             string homeTeamScore = Request.Form["homeTeamScore"];
             string awayTeamId = Request.Form["awayTeam"];
@@ -69,25 +71,46 @@ namespace FootballApplication.Controllers
             string gameweek = Request.Form["gameweek"];
             string gametime = Request.Form["gameTime"];
             string stadiumId = Request.Form["stadium"];
-
-            //Sugalvoti su ID rungtyniu!!!!!!
             Matches match = new Matches();
-            match.IdMatches = 1200;
-            match.FkLeaguesId = Int32.Parse(leagueId);
-            match.FkHomeTeamId = Int32.Parse(homeTeamId);
-            match.HomeTeamScore = Int32.Parse(homeTeamScore);
-            match.FkAwayTeamId = Int32.Parse(awayTeamId);
-            match.AwayTeamScore = Int32.Parse(awayTeamScore);
-            match.GameWeek = Int32.Parse(gameweek);
-            match.MatchTime = DateTime.Parse(gametime);
-            match.FkStadiumsId = Int32.Parse(stadiumId);
-
             if (!homeTeamId.Equals(awayTeamId))
             {
-                _context.Add(match);
-                await _context.SaveChangesAsync();
+                var matchesCount = _context.Matches.Count();
+                match.IdMatches = matchesCount + 2;
+                match.FkHomeTeamId = int.Parse(homeTeamId);
+                match.FkAwayTeamId = Int32.Parse(awayTeamId);
+                match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
+                match.FkStadiumsId = !stadiumId.Equals("") ? Int32.Parse(stadiumId) : 0;
+                match.HomeTeamScore = !homeTeamScore.Equals("") ? Int32.Parse(homeTeamScore.Trim()) : 0;
+                match.AwayTeamScore = !awayTeamScore.Equals("") ? Int32.Parse(awayTeamScore.Trim()) : 0;
+                match.GameWeek = !gameweek.Equals("") ? Int32.Parse(gameweek.Trim()) : 0;
+                match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
+                match.MatchTime = gametime.Equals("") ? Convert.ToDateTime(gametime.ToString()) : DateTime.MinValue;
+                
+                TryValidateModel(match);
+                if (ModelState.IsValid)
+                {
+                    _context.Add(match);
+                    await _context.SaveChangesAsync();
+                    TempData["InsertSuccess"] = "Match was succesfully inserted!";
+                } else
+                {
+                    var errors = new List<string>();
+                    foreach(var modelState in ModelState.Values)
+                    {
+                        foreach(var modelError in modelState.Errors)
+                        {
+                            errors.Add(modelError.ErrorMessage);
+                        }
+                    }
+                    TempData["ErrorMessage"] = errors as IEnumerable<string>;
+                }
             }
-
+            
+            if(homeTeamId.Equals(awayTeamId))
+            {
+                TempData["InsertError"] = "ERROR! Home team and away team are the same index.";
+            }
+           
             return Redirect("/");
         }
     }

@@ -11,27 +11,27 @@
 </head>
 <body>
     <div class="login-page">
-        @if (TempData["UsernameError"] != null)
+        @if (ViewData.ContainsKey("UsernameError"))
         {
             <div class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                @TempData["UsernameError"]
+                @ViewData["UsernameError"]
             </div>
         }
 
-        @if (TempData["PasswordError"] != null)
+        @if (ViewData.ContainsKey("PasswordError"))
         {
             <div class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                @TempData["PasswordError"]
+                @ViewData["PasswordError"]
             </div>
         }
 
-        @if (TempData["UserError"] != null)
+        @if (ViewData.ContainsKey("UserError"))
         {
             <div class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                @TempData["UserError"]
+                @ViewData["UserError"]
             </div>
         }
 

@@ -8,7 +8,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
-   && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
 {
     <div class="modal">
         <div class="modal-box">
@@ -21,7 +21,7 @@
             <form class="match-insert" method="post" asp-controller="Matches" asp-action="Insert">
                 <div class="modal-content">
                     <div class="input-field">
-                        @Html.DropDownList("league", new SelectList(Model.LeaguesList.Select(el => new { Value = el.IdLeagues, Key = el.Name }), "Value", "Key"), "Select league")
+                        @Html.DropDownList("league", new SelectList(Model.LeaguesList.Select(el => new { Value = el.IdLeagues, Key = el.Name }), "Value", "Key"), "Select league", new { @for = "testas" })
                     </div>
                     <div class="input-field">
                         @Html.DropDownList("homeTeam", new SelectList(Model.TeamList.Select(el => new { Value = el.IdTeam, Key = el.TeamName }), "Value", "Key"), "Select home team")
@@ -56,12 +56,46 @@
         </div>
     </div>
 }
+
+
+@if (TempData.ContainsKey("InsertSuccess"))
+{
+
+    <div class="success-msg">
+        <i class="fa fa-check"></i>
+        @TempData["InsertSuccess"]
+    </div>
+}
+
+@if (TempData.ContainsKey("InsertError"))
+{
+    <div class="error-msg">
+        <i class="fa fa-times-circle"></i>
+        @TempData["InsertError"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    foreach (var errorMessage in TempData["ErrorMessage"] as IEnumerable<string>)
+    {
+        <div class="error-msg">
+            <i class="fa fa-times-circle"></i>
+            @errorMessage
+        </div>
+    }
+
+}
+
+
+
+
 <div class="row content-title">
     <div class="column-left col-6 center">
     </div>
     <div class="column-right col-6 center">
         @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
-             && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
         {
             <div class="page-actions">
                 <div class="button-link add-item float-right">
@@ -95,7 +129,7 @@
                                 </td>
                                 <td class="matchtime">
                                     @if ((DateTime.Compare(DateTime.Now, item.matchTime.Value.AddHours(1).AddMinutes(50)) > 0)
-                             && (item.homeTeamScore != null && item.awayTeamScore != null))
+&& (item.homeTeamScore != null && item.awayTeamScore != null))
                                     {
                                         <div>
                                             Full time
