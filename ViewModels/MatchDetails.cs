@@ -13,5 +13,7 @@ namespace FootballApplication.ViewModels
         public List<Team> TeamList { get; set; }
         public List<Stadiums> StadiumsList { get; set; }
         public List<Leagues> LeaguesList { get; set; }
+
+        public Matches matches { get; set; }
     }
 }

@@ -82,3 +82,12 @@ leagueTeams.forEach(el => {
         window.location.href = `/Teams/${teamID}`;
     });
 })
+
+var matchesDelete = document.querySelectorAll('.delete-action');
+matchesDelete.forEach(el => {
+    el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var matchID = e.target.closest('.delete-action').getAttribute('data-match-id');
+        window.location.href = `/Matches/Delete/${matchID}`;
+    });
+})

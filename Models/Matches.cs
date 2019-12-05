@@ -11,6 +11,7 @@ namespace FootballApplication.Models
         public int? AwayTeamScore { get; set; }
         public int? GameWeek { get; set; }
 
+        //Regexai??
         [Required(ErrorMessage = "Please enter game time.")]
         public DateTime? MatchTime { get; set; }
 

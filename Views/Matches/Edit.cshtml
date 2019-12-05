@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "Matches";
+}
+@model FootballApplication.ViewModels.MatchDetails
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+<div class="row content-title">
+    <div class="column-left col-6 center">
+    </div>
+    <div class="column-right col-6 center">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 ">
+        <form class="match-update" method="post" asp-controller="Matches" asp-action="Edit">
+            <div class="input-field">
+                @Html.DropDownListFor(x => x.matches.FkLeaguesId, new SelectList(Model.LeaguesList.Select(el => new { Value = el.IdLeagues, Key = el.Name }), "Value", "Key"), "Select league", new { @for = "testas" })
+            </div>
+            <div class="input-field">
+                @Html.DropDownListFor(x => x.matches.FkHomeTeamId, new SelectList(Model.TeamList.Select(el => new { Value = el.IdTeam, Key = el.TeamName }), "Value", "Key"), "Select home team")
+            </div>
+            <div class="input-field">
+                @Html.TextBox("homeTeamScore", Model.matches.HomeTeamScore, new { @placeholder = "Home team score" })
+            </div>
+            <div class="input-field">
+                @Html.DropDownListFor(x => x.matches.FkAwayTeamId, new SelectList(Model.TeamList.Select(el => new { Value = el.IdTeam, Key = el.TeamName }), "Value", "Key"), "Select away team")
+            </div>
+            <div class="input-field">
+                @Html.TextBox("awayTeamScore", Model.matches.AwayTeamScore, new { @placeholder = "Home team score" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("gameweek", Model.matches.GameWeek, new { @placeholder = "Gameweek" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("gameTime", Model.matches.MatchTime, new { @placeholder = "Match time" })
+            </div>
+            <div class="input-field">
+                @Html.DropDownListFor(x => x.matches.FkStadiumsId, new SelectList(Model.StadiumsList.Select(el => new { Value = el.IdStadiums, Key = el.Name }), "Value", "Key"), "Select stadium")
+            </div>
+            <div class="submit-button">
+                <button type="submit" class="btn">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

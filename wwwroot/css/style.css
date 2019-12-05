@@ -918,3 +918,11 @@ input {
     color: #D8000C;
     background-color: #FFBABA;
 }
+
+.delete-action:hover > i {
+    color: #56d224;
+}
+
+.edit-action:hover > i {
+    color: #56d224;
+}

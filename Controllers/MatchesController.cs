@@ -108,9 +108,81 @@ namespace FootballApplication.Controllers
             
             if(homeTeamId.Equals(awayTeamId))
             {
-                TempData["InsertError"] = "ERROR! Home team and away team are the same index.";
+                TempData["ActionError"] = "ERROR! Home team and away team are the same index.";
             }
-           
+            return Redirect("/");
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            int userRoleNumber = HttpContext.Session.Get("UserRole") != null ? BitConverter.ToInt16(HttpContext.Session.Get("UserRole")) : 0;
+            if (userRoleNumber == 1)
+            {
+                var matches = _context.Matches
+                          .Where(el => el.IdMatches == id)
+                          .FirstOrDefault();
+                _context.Remove(matches);
+                await _context.SaveChangesAsync();
+                TempData["ActionSuccess"] = "Match was succesfully deleted!";
+            }
+            else
+            {
+                TempData["ActionError"] = "ERROR! You don't have perimissions.";
+            }
+            return Redirect("/");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            MatchDetails matchDetails = new MatchDetails();
+            int userRoleNumber = HttpContext.Session.Get("UserRole") != null ? BitConverter.ToInt16(HttpContext.Session.Get("UserRole")) : 0;
+            if (userRoleNumber == 1)
+            {
+                var matchInformation = _context.Matches.Where(x => x.IdMatches == id).SingleOrDefault();
+                matchDetails.matches = matchInformation;
+                List<Team> teams = await _context.Team.ToListAsync();
+                List<Stadiums> stadiums = await _context.Stadiums.ToListAsync();
+                List<Leagues> leagues = await _context.Leagues.ToListAsync();
+                matchDetails.TeamList = teams;
+                matchDetails.StadiumsList = stadiums;
+                matchDetails.LeaguesList = leagues;
+            }
+            return View(matchDetails);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id)
+        {
+            string leagueId = Request.Form["matches.FkLeaguesId"];
+            string homeTeamId = Request.Form["matches.FkHomeTeamId"];
+            string homeTeamScore = Request.Form["homeTeamScore"];
+            string awayTeamId = Request.Form["matches.FkAwayTeamId"];
+            string awayTeamScore = Request.Form["awayTeamScore"];
+            string gameweek = Request.Form["gameweek"];
+            string gametime = Request.Form["gameTime"];
+            string stadiumId = Request.Form["matches.FkStadiumsId"];
+            Matches match = new Matches();
+            match.IdMatches = id;
+            match.FkHomeTeamId = int.Parse(homeTeamId);
+            match.FkAwayTeamId = Int32.Parse(awayTeamId);
+            match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
+            match.FkStadiumsId = !stadiumId.Equals("") ? Int32.Parse(stadiumId) : 0;
+            match.HomeTeamScore = !homeTeamScore.Equals("") ? Int32.Parse(homeTeamScore.Trim()) : 0;
+            match.AwayTeamScore = !awayTeamScore.Equals("") ? Int32.Parse(awayTeamScore.Trim()) : 0;
+            match.GameWeek = !gameweek.Equals("") ? Int32.Parse(gameweek.Trim()) : 0;
+            match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
+            match.MatchTime = gametime.Equals("") ? Convert.ToDateTime(gametime.ToString()) : DateTime.MinValue;
+            TryValidateModel(match);
+            if (ModelState.IsValid)
+            {
+                _context.Update(match);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+
+            }
             return Redirect("/");
         }
     }

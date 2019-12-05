@@ -114,7 +114,16 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="table-title" colspan="5">Matches</th>
+                        @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+                        {
+                            <th class="table-title" colspan="7">Matches</th>
+                        }
+                        else
+                        {
+                            <th class="table-title" colspan="5">Matches</th>
+                        }
+
                     </tr>
                 </thead>
 
@@ -123,48 +132,60 @@
                     <tbody>
                         @foreach (var item in Model.HeadToHeadMatches)
                         {
-                            <tr class="match" data-match-id=@item.id>
-                                <td class="game-week">
-                                    @item.gameWeek
-                                </td>
-                                <td class="matchtime">
-                                    @if ((DateTime.Compare(DateTime.Now, item.matchTime.Value.AddHours(1).AddMinutes(50)) > 0)
+                        <tr class="match" data-match-id=@item.id>
+                            <td class="game-week">
+                                @item.gameWeek
+                            </td>
+                            <td class="matchtime">
+                                @if ((DateTime.Compare(DateTime.Now, item.matchTime.Value.AddHours(1).AddMinutes(50)) > 0)
 && (item.homeTeamScore != null && item.awayTeamScore != null))
-                                    {
-                                        <div>
-                                            Full time
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        @item.matchTime
-                                    }
-                                </td>
-                                <td class="team-name">
-                                    <div class="club-image align-center float-right" style="padding-left:20px;">
-                                        <img src=@item.homeTeamCrest />
+                                {
+                                    <div>
+                                        Full time
                                     </div>
-                                    <div class="club-name align-center justify-right">
-                                        @item.homeTeamName
-                                    </div>
+                                }
+                                else
+                                {
+                                    @item.matchTime
+                                }
+                            </td>
+                            <td class="team-name">
+                                <div class="club-image align-center float-right" style="padding-left:20px;">
+                                    <img src=@item.homeTeamCrest />
+                                </div>
+                                <div class="club-name align-center justify-right">
+                                    @item.homeTeamName
+                                </div>
+                            </td>
+                            <td class="result">
+                                @item.homeTeamScore : @item.awayTeamScore
+                            </td>
+                            <td class="team-name">
+                                <div class="club-image align-center float-left">
+                                    <img src=@item.awayTeamCrest />
+                                </div>
+                                <div class="club-name align-center">
+                                    @item.awayTeamName
+                                </div>
+                            </td>
+                            @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+                               && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+                            {
+                                <td class="delete-action" data-match-id="@item.id">
+                                    <i class="fa fa-trash"></i>
                                 </td>
-                                <td class="result">
-                                    @item.homeTeamScore : @item.awayTeamScore
+                                <td class="delete-action">
+                                    <i class="fa fa-edit"></i>
                                 </td>
-                                <td class="team-name">
-                                    <div class="club-image align-center float-left">
-                                        <img src=@item.awayTeamCrest />
-                                    </div>
-                                    <div class="club-name align-center">
-                                        @item.awayTeamName
-                                    </div>
-                                </td>
-                            </tr>
+                            }
+
+                        </tr>
                         }
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2">
+                            <td colspan=@(HttpContextAccessor.HttpContext.Session.Get("UserRole") != null 
+                                            && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1 ? 4 : 2) >
                                 Show items
                                 @if (Model.HeadToHeadMatches.PageNumber == 1)
                                 {
@@ -225,15 +246,25 @@
                                 </div>
                             </td>
                         </tr>
-                    </tfoot>
+                </tfoot>
                 }
                 else
                 {
                     <tbody>
                         <tr>
-                            <td colspan="5">
-                                No information found
-                            </td>
+                            @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+                            {
+                                <td colspan="6">
+                                    No information found
+                                </td>
+                            }
+                            else
+                            {
+                                <td colspan="5">
+                                    No information found
+                                </td>
+                            }
                         </tr>
                     </tbody>
                 }
