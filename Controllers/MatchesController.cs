@@ -154,34 +154,51 @@ namespace FootballApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id)
         {
-            string leagueId = Request.Form["matches.FkLeaguesId"];
-            string homeTeamId = Request.Form["matches.FkHomeTeamId"];
-            string homeTeamScore = Request.Form["homeTeamScore"];
-            string awayTeamId = Request.Form["matches.FkAwayTeamId"];
-            string awayTeamScore = Request.Form["awayTeamScore"];
-            string gameweek = Request.Form["gameweek"];
-            string gametime = Request.Form["gameTime"];
-            string stadiumId = Request.Form["matches.FkStadiumsId"];
-            Matches match = new Matches();
-            match.IdMatches = id;
-            match.FkHomeTeamId = int.Parse(homeTeamId);
-            match.FkAwayTeamId = Int32.Parse(awayTeamId);
-            match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
-            match.FkStadiumsId = !stadiumId.Equals("") ? Int32.Parse(stadiumId) : 0;
-            match.HomeTeamScore = !homeTeamScore.Equals("") ? Int32.Parse(homeTeamScore.Trim()) : 0;
-            match.AwayTeamScore = !awayTeamScore.Equals("") ? Int32.Parse(awayTeamScore.Trim()) : 0;
-            match.GameWeek = !gameweek.Equals("") ? Int32.Parse(gameweek.Trim()) : 0;
-            match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
-            match.MatchTime = gametime.Equals("") ? Convert.ToDateTime(gametime.ToString()) : DateTime.MinValue;
-            TryValidateModel(match);
-            if (ModelState.IsValid)
+            int userRoleNumber = HttpContext.Session.Get("UserRole") != null ? BitConverter.ToInt16(HttpContext.Session.Get("UserRole")) : 0;
+            if (userRoleNumber == 1)
             {
-                _context.Update(match);
-                await _context.SaveChangesAsync();
+                string leagueId = Request.Form["matches.FkLeaguesId"];
+                string homeTeamId = Request.Form["matches.FkHomeTeamId"];
+                string homeTeamScore = Request.Form["homeTeamScore"];
+                string awayTeamId = Request.Form["matches.FkAwayTeamId"];
+                string awayTeamScore = Request.Form["awayTeamScore"];
+                string gameweek = Request.Form["gameweek"];
+                string gametime = Request.Form["gameTime"];
+                string stadiumId = Request.Form["matches.FkStadiumsId"];
+                Matches match = new Matches();
+                match.IdMatches = id;
+                match.FkHomeTeamId = int.Parse(homeTeamId);
+                match.FkAwayTeamId = Int32.Parse(awayTeamId);
+                match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
+                match.FkStadiumsId = !stadiumId.Equals("") ? Int32.Parse(stadiumId) : 0;
+                match.HomeTeamScore = !homeTeamScore.Equals("") ? Int32.Parse(homeTeamScore.Trim()) : 0;
+                match.AwayTeamScore = !awayTeamScore.Equals("") ? Int32.Parse(awayTeamScore.Trim()) : 0;
+                match.GameWeek = !gameweek.Equals("") ? Int32.Parse(gameweek.Trim()) : 0;
+                match.FkLeaguesId = !leagueId.Equals("") ? Int32.Parse(leagueId) : 0;
+                match.MatchTime = gametime.Equals("") ? Convert.ToDateTime(gametime.ToString()) : DateTime.MinValue;
+                TryValidateModel(match);
+                if (ModelState.IsValid)
+                {
+                    _context.Update(match);
+                    await _context.SaveChangesAsync();
+                    TempData["ActionSuccess"] = "Match was succesfully updated!";
+                }
+                else
+                {
+                    var errors = new List<string>();
+                    foreach (var modelState in ModelState.Values)
+                    {
+                        foreach (var modelError in modelState.Errors)
+                        {
+                            errors.Add(modelError.ErrorMessage);
+                        }
+                    }
+                    TempData["ErrorMessage"] = errors as IEnumerable<string>;
+                }
             }
             else
             {
-
+                TempData["ActionError"] = "ERROR! You don't have perimissions.";
             }
             return Redirect("/");
         }

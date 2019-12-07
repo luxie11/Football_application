@@ -30,3 +30,6 @@ D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballAppl
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\FootballApplication.csprojAssemblyReference.cache
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Account\Index.cshtml.g.cs
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Matches\Edit.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Stadiums\Index.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Stadiums\Insert.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Stadiums\Edit.cshtml.g.cs

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Stadiums";
+}
+@model FootballApplication.ViewModels.StadiumsView
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@if (TempData.ContainsKey("InsertSuccess"))
+{
+
+    <div class="success-msg">
+        <i class="fa fa-check"></i>
+        @TempData["InsertSuccess"]
+    </div>
+}
+
+@if (TempData.ContainsKey("InsertError"))
+{
+    <div class="error-msg">
+        <i class="fa fa-times-circle"></i>
+        @TempData["InsertError"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    foreach (var errorMessage in TempData["ErrorMessage"] as IEnumerable<string>)
+    {
+        <div class="error-msg">
+            <i class="fa fa-times-circle"></i>
+            @errorMessage
+        </div>
+    }
+}
+
+<div class="row">
+    <div class="col-12 ">
+        <form class="match-update" method="post" asp-controller="Stadiums" asp-action="Insert">
+            <div class="input-field">
+                @Html.TextBox("StadiumName", null, new { @placeholder = "Stadium name" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("Capacity", null, new { @placeholder = "Capacity" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("StadiumOpened", null, new { @placeholder = "Stadium opened" })
+            </div>
+            <div class="input-field">
+                @Html.DropDownList("HomeTeamId", new SelectList(Model.team.Select(el => new { Value = el.IdTeam, Key = el.TeamName }), "Value", "Key"), "Select home team")
+            </div>
+            <div class="submit-button">
+                <button type="submit" class="btn">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
