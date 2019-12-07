@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewData["Title"] = "Players";
+}
+@model FootballApplication.ViewModels.PlayersView
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@if (TempData.ContainsKey("ActionSuccess"))
+{
+
+    <div class="success-msg">
+        <i class="fa fa-check"></i>
+        @TempData["ActionSuccess"]
+    </div>
+}
+
+@if (TempData.ContainsKey("ActionError"))
+{
+    <div class="error-msg">
+        <i class="fa fa-times-circle"></i>
+        @TempData["ActionError"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    foreach (var errorMessage in TempData["ErrorMessage"] as IEnumerable<string>)
+    {
+        <div class="error-msg">
+            <i class="fa fa-times-circle"></i>
+            @errorMessage
+        </div>
+    }
+
+}
+
+<div class="row content-title">
+    <div class="column-left col-6 center">
+    </div>
+    <div class="column-right col-6 center">
+        @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+        {
+            <div class="page-actions">
+                <div class="button-link add-item float-right">
+                    <a asp-controller="Players"
+                       asp-action="Insert"
+                       class="table-action">
+                        <i class="fa fa-plus"></i>
+                        Add new player
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 table-information">
+        <div class="table-wrapper">
+            <table>
+                @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+                {
+                    <thead>
+                        <tr>
+                            <th class="table-title" colspan="8">Players</th>
+                        </tr>
+                    </thead>
+                    @if (Model.players.Count != 0)
+                    {
+                        <tbody>
+                            @foreach (var item in Model.players)
+                            {
+                            <tr class="match" data-player-id=@item.IdPlayers>
+                                <td>
+                                    @item.IdPlayers
+                                </td>
+                                <td class="">
+                                    @item.FirstName
+                                    @item.LastName
+                                </td>
+                                <td>
+                                    @item.Position
+                                </td>
+                                <td class="">
+                                    @item.KitNumber
+                                </td>
+                                <td class="">
+                                    @item.Nationality
+                                </td>
+                                <td class="">
+                                    @item.ClubName
+                                </td>
+                                @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+                            && BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+                                {
+                                    <td class="delete-action" data-player-id="@item.IdPlayers">
+                                        <a asp-controller="Players"
+                                           asp-action="Delete"
+                                           asp-route-id=@item.IdPlayers>
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                    <td class="edit-action">
+                                        <a asp-controller="Players"
+                                           asp-action="Edit"
+                                           asp-route-id=@item.IdPlayers>
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                }
+                            </tr>
+                            }
+                        </tbody>
+                    }
+                    else
+                    {
+                        <tbody>
+                            <tr>
+                                @if (HttpContextAccessor.HttpContext.Session.Get("UserRole") != null
+&& BitConverter.ToInt16(HttpContextAccessor.HttpContext.Session.Get("UserRole")) == 1)
+                                {
+                                    <td colspan="8">
+                                        No information found
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td colspan="6">
+                                        No information found
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

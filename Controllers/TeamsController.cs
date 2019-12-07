@@ -19,6 +19,7 @@ namespace FootballApplication.Controllers
             _context = context;
         }
 
+        //Users page
         public async Task<IActionResult> Index(int id)
         {
             TeamDetails teamDetails = new TeamDetails();
@@ -79,5 +80,7 @@ namespace FootballApplication.Controllers
             teamDetails.nextMatches = clubNextMatches;
             return View(teamDetails);
         }
+
+        //Admin functionality
     }
 }

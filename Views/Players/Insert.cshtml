@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Leagues";
+}
+@model FootballApplication.ViewModels.PlayersView
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<div class="row">
+    <div class="col-12 ">
+        <form class="match-update" method="post" asp-controller="Players" asp-action="Insert">
+            <div class="input-field">
+                @Html.TextBox("Firstname", null, new { @placeholder = "Firstname" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("Lastname", null, new { @placeholder = "Lastname" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("Position", null, new { @placeholder = "Position" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("KitNumber", null, new { @placeholder = "Kit number" })
+            </div>
+            <div class="input-field">
+                @Html.TextBox("Nationality", null, new { @placeholder = "Nationality" })
+            </div>
+            <div class="input-field">
+                @Html.DropDownList("TeamID", new SelectList(Model.teams.Select(el => new { Value = el.IdTeam, Key = el.TeamName }), "Value", "Key"), "Select player club")
+            </div>
+            
+            <div class="submit-button">
+                <button type="submit" class="btn">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+ 

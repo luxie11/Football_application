@@ -33,3 +33,9 @@ D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballAppl
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Stadiums\Index.cshtml.g.cs
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Stadiums\Insert.cshtml.g.cs
 D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Stadiums\Edit.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Leagues\Index.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Leagues\Insert.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Leagues\Edit.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Players\Index.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Players\Insert.cshtml.g.cs
+D:\Universitetas\KTU Ketvirtas Kursas\Framework\FootballApplication\FootballApplication\obj\Debug\netcoreapp2.2\Razor\Views\Players\Edit.cshtml.g.cs

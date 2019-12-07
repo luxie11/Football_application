@@ -24,6 +24,7 @@ namespace FootballApplication.Controllers
 
         public async Task<IActionResult> Index(int? page) 
         {
+            TempData.Clear();
             var matchesList = await (from matches in _context.Matches
                             join homeTeam in _context.Team on matches.FkHomeTeamId equals homeTeam.IdTeam
                             join awayTeam in _context.Team on matches.FkAwayTeamId equals awayTeam.IdTeam
